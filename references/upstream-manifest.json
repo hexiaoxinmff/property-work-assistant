@@ -1,0 +1,106 @@
+[
+  {
+    "name": "data-reconcile",
+    "repository": "https://github.com/ccrumptonai/data-reconcile",
+    "commit": "444f5c5d4d838f3e12c3b05e55c6137a5c394dc6",
+    "archive_url": "https://codeload.github.com/ccrumptonai/data-reconcile/zip/444f5c5d4d838f3e12c3b05e55c6137a5c394dc6",
+    "archive_sha256": "912c5c127c2d3658772d38feeb218a9a93f204a2f6f4be1c3f74e1098748201c",
+    "license": "MIT",
+    "path": "assets/upstream/data-reconcile",
+    "status": "完整源码归档；使用前按需校验并解压，项目本身未业务验收",
+    "archive_path": "assets/upstream-archives/data-reconcile.zip"
+  },
+  {
+    "name": "data-quality-toolkit",
+    "repository": "https://github.com/d0suk0i/data-quality-toolkit",
+    "commit": "56f938a76a8e624de2bd29146e47701e7f8d9fc2",
+    "archive_url": "https://codeload.github.com/d0suk0i/data-quality-toolkit/zip/56f938a76a8e624de2bd29146e47701e7f8d9fc2",
+    "archive_sha256": "16f31f88a1e004baf2c553699348bcca7760f6e1f0b51e43085220e48731029f",
+    "license": "MIT",
+    "path": "assets/upstream/data-quality-toolkit",
+    "status": "完整源码归档；使用前按需校验并解压，项目本身未业务验收",
+    "archive_path": "assets/upstream-archives/data-quality-toolkit.zip"
+  },
+  {
+    "name": "python-docx",
+    "repository": "https://github.com/python-openxml/python-docx",
+    "commit": "e45454602b53e8e572b179ccf1c91093ec9f4ed7",
+    "archive_url": "https://codeload.github.com/python-openxml/python-docx/zip/e45454602b53e8e572b179ccf1c91093ec9f4ed7",
+    "archive_sha256": "c105a085d76af1ce1903aed9a3b0b61c392fa938f088c5372af8527604548ec9",
+    "license": "MIT",
+    "path": "assets/upstream/python-docx",
+    "status": "完整源码归档；使用前按需校验并解压，项目本身未业务验收",
+    "archive_parts": [
+      "assets/upstream-archives/python-docx.parts/part-000",
+      "assets/upstream-archives/python-docx.parts/part-001",
+      "assets/upstream-archives/python-docx.parts/part-002",
+      "assets/upstream-archives/python-docx.parts/part-003",
+      "assets/upstream-archives/python-docx.parts/part-004",
+      "assets/upstream-archives/python-docx.parts/part-005",
+      "assets/upstream-archives/python-docx.parts/part-006",
+      "assets/upstream-archives/python-docx.parts/part-007",
+      "assets/upstream-archives/python-docx.parts/part-008",
+      "assets/upstream-archives/python-docx.parts/part-009",
+      "assets/upstream-archives/python-docx.parts/part-010",
+      "assets/upstream-archives/python-docx.parts/part-011",
+      "assets/upstream-archives/python-docx.parts/part-012",
+      "assets/upstream-archives/python-docx.parts/part-013",
+      "assets/upstream-archives/python-docx.parts/part-014"
+    ]
+  },
+  {
+    "name": "OpenLeaseOps",
+    "repository": "https://github.com/Evostructs/OpenLeaseOps",
+    "commit": "2b20d32b0c83e1522f246f8cef0e3889a2990ed7",
+    "archive_url": "https://codeload.github.com/Evostructs/OpenLeaseOps/zip/2b20d32b0c83e1522f246f8cef0e3889a2990ed7",
+    "archive_sha256": "f496cc066276cbd5adcc66f13b2c256aa22f62aba1557420349337bd66077866",
+    "license": "MIT",
+    "path": "assets/upstream/OpenLeaseOps",
+    "status": "完整源码归档；使用前按需校验并解压，项目本身未业务验收",
+    "archive_path": "assets/upstream-archives/OpenLeaseOps.zip"
+  },
+  {
+    "name": "open-apartment",
+    "repository": "https://github.com/maciej-umanski/open-apartment",
+    "commit": "557f8e911038501e774c5e5cecaf70383f79e233",
+    "archive_url": "https://codeload.github.com/maciej-umanski/open-apartment/zip/557f8e911038501e774c5e5cecaf70383f79e233",
+    "archive_sha256": "ee882ccc895b2ff3f147c853eefd4246c8309bedb8c0fee2d70b355479decc93",
+    "license": "MIT",
+    "path": "assets/upstream/open-apartment",
+    "status": "完整源码归档；使用前按需校验并解压，项目本身未业务验收",
+    "archive_path": "assets/upstream-archives/open-apartment.zip"
+  },
+  {
+    "name": "RowBridge",
+    "repository": "https://github.com/SerDrozd/RowBridge",
+    "commit": "512eb148e518846c2816e85cc78c5af43b256cc6",
+    "archive_url": "https://codeload.github.com/SerDrozd/RowBridge/zip/512eb148e518846c2816e85cc78c5af43b256cc6",
+    "archive_sha256": "ca5c8f57d25162a356cf5e7b1bc0ae339e42d5e0fe09fc3ff42957a9e8d6f4b7",
+    "license": "MIT",
+    "path": "assets/upstream/RowBridge",
+    "status": "完整源码归档；使用前按需校验并解压，项目本身未业务验收",
+    "archive_path": "assets/upstream-archives/RowBridge.zip"
+  },
+  {
+    "name": "maintainstuff",
+    "repository": "https://github.com/JoshuaStorm1017/maintainstuff",
+    "commit": "4d2b0b9d0bea19db155432f13c50192265f63cfe",
+    "archive_url": "https://codeload.github.com/JoshuaStorm1017/maintainstuff/zip/4d2b0b9d0bea19db155432f13c50192265f63cfe",
+    "archive_sha256": "3be047dc5306e2a49fab8f8f6f35efc4756606facba6b99ed9acd4283f1f92dd",
+    "license": "MIT",
+    "path": "assets/upstream/maintainstuff",
+    "status": "完整源码归档；使用前按需校验并解压，项目本身未业务验收",
+    "archive_path": "assets/upstream-archives/maintainstuff.zip"
+  },
+  {
+    "name": "vercel-skills",
+    "repository": "https://github.com/vercel-labs/skills",
+    "commit": "4a351bc302b856b58fa13a055e764d3a384b741d",
+    "archive_url": "https://codeload.github.com/vercel-labs/skills/zip/4a351bc302b856b58fa13a055e764d3a384b741d",
+    "archive_sha256": "f44e08865526575cc7957e8933585de823edac5132c39d7f72089090acd59634",
+    "license": "MIT",
+    "path": "assets/upstream/vercel-skills",
+    "status": "完整源码归档；使用前按需校验并解压，项目本身未业务验收",
+    "archive_path": "assets/upstream-archives/vercel-skills.zip"
+  }
+]

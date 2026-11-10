@@ -12,9 +12,8 @@
 
 ## 第三方源码
 
-八个上游项目的完整固定版本源码以 ZIP 保存在 assets/upstream-archives/，地址、版本、哈希及许可证见 references/upstream-manifest.json。按需运行 python scripts/restore_upstreams.py --name 项目名；脚本验证哈希并解压至 assets/upstream/，不会覆盖现有文件。原作者许可证在相应归档和解压目录内。上游项目未全部执行或业务验收，不能视为已经接入或经过安全审计。
+八个上游项目的完整固定版本源码以 ZIP 或 ZIP 分片保存在 assets/upstream-archives/，地址、版本、哈希及许可证见 references/upstream-manifest.json。按需运行 python scripts/restore_upstreams.py --name 项目名；脚本验证哈希并解压至 assets/upstream/，不会覆盖现有文件。原作者许可证在相应归档和解压目录内。上游项目未全部执行或业务验收，不能视为已经接入或经过安全审计。
 
 ## 当前验证范围
 
 已用虚构样例在本机验证基本文件读取和生成、部分 Word 定点填充及单个复杂模板的结构和 WPS 渲染、公开技能目录搜索。不同平台、新会话自动发现与调用、真实物业资料和使用者业务验收仍需测试。平台是否支持读取图片、OCR、生成图片及跨会话保存偏好须按实际环境确认。
-
