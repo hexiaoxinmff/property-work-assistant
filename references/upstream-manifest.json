@@ -7,7 +7,7 @@
     "archive_sha256": "912c5c127c2d3658772d38feeb218a9a93f204a2f6f4be1c3f74e1098748201c",
     "license": "MIT",
     "path": "assets/upstream/data-reconcile",
-    "status": "完整源码归档；使用前按需校验并解压，项目本身未业务验收",
+    "status": "完整包可用随包归档；轻量包按需下载，均先核对 SHA-256；未经业务验收",
     "archive_path": "assets/upstream-archives/data-reconcile.zip"
   },
   {
@@ -18,7 +18,7 @@
     "archive_sha256": "16f31f88a1e004baf2c553699348bcca7760f6e1f0b51e43085220e48731029f",
     "license": "MIT",
     "path": "assets/upstream/data-quality-toolkit",
-    "status": "完整源码归档；使用前按需校验并解压，项目本身未业务验收",
+    "status": "完整包可用随包归档；轻量包按需下载，均先核对 SHA-256；未经业务验收",
     "archive_path": "assets/upstream-archives/data-quality-toolkit.zip"
   },
   {
@@ -29,7 +29,7 @@
     "archive_sha256": "c105a085d76af1ce1903aed9a3b0b61c392fa938f088c5372af8527604548ec9",
     "license": "MIT",
     "path": "assets/upstream/python-docx",
-    "status": "完整源码归档；使用前按需校验并解压，项目本身未业务验收",
+    "status": "完整包可用随包归档；轻量包按需下载，均先核对 SHA-256；未经业务验收",
     "archive_parts": [
       "assets/upstream-archives/python-docx.parts/part-000",
       "assets/upstream-archives/python-docx.parts/part-001",
@@ -56,7 +56,7 @@
     "archive_sha256": "f496cc066276cbd5adcc66f13b2c256aa22f62aba1557420349337bd66077866",
     "license": "MIT",
     "path": "assets/upstream/OpenLeaseOps",
-    "status": "完整源码归档；使用前按需校验并解压，项目本身未业务验收",
+    "status": "完整包可用随包归档；轻量包按需下载，均先核对 SHA-256；未经业务验收",
     "archive_path": "assets/upstream-archives/OpenLeaseOps.zip"
   },
   {
@@ -67,7 +67,7 @@
     "archive_sha256": "ee882ccc895b2ff3f147c853eefd4246c8309bedb8c0fee2d70b355479decc93",
     "license": "MIT",
     "path": "assets/upstream/open-apartment",
-    "status": "完整源码归档；使用前按需校验并解压，项目本身未业务验收",
+    "status": "完整包可用随包归档；轻量包按需下载，均先核对 SHA-256；未经业务验收",
     "archive_path": "assets/upstream-archives/open-apartment.zip"
   },
   {
@@ -78,7 +78,7 @@
     "archive_sha256": "ca5c8f57d25162a356cf5e7b1bc0ae339e42d5e0fe09fc3ff42957a9e8d6f4b7",
     "license": "MIT",
     "path": "assets/upstream/RowBridge",
-    "status": "完整源码归档；使用前按需校验并解压，项目本身未业务验收",
+    "status": "完整包可用随包归档；轻量包按需下载，均先核对 SHA-256；未经业务验收",
     "archive_path": "assets/upstream-archives/RowBridge.zip"
   },
   {
@@ -89,7 +89,7 @@
     "archive_sha256": "3be047dc5306e2a49fab8f8f6f35efc4756606facba6b99ed9acd4283f1f92dd",
     "license": "MIT",
     "path": "assets/upstream/maintainstuff",
-    "status": "完整源码归档；使用前按需校验并解压，项目本身未业务验收",
+    "status": "完整包可用随包归档；轻量包按需下载，均先核对 SHA-256；未经业务验收",
     "archive_path": "assets/upstream-archives/maintainstuff.zip"
   },
   {
@@ -100,7 +100,7 @@
     "archive_sha256": "f44e08865526575cc7957e8933585de823edac5132c39d7f72089090acd59634",
     "license": "MIT",
     "path": "assets/upstream/vercel-skills",
-    "status": "完整源码归档；使用前按需校验并解压，项目本身未业务验收",
+    "status": "完整包可用随包归档；轻量包按需下载，均先核对 SHA-256；未经业务验收",
     "archive_path": "assets/upstream-archives/vercel-skills.zip"
   }
 ]

@@ -186,6 +186,14 @@ def prefs(args):
         if not args.text or not args.scope: raise ValueError('添加偏好需要 --text 和 --scope')
         entry={'id':uuid.uuid4().hex,'scope':args.scope,'preference':args.text,'date':dt.date.today().isoformat(),'status':'confirmed-by-user'}
         data['preferences'].append(entry);save_store(path,data);emit({'path':str(path),'saved':entry})
+    elif args.action=='update':
+        found=[p for p in data['preferences'] if p.get('id')==args.id]
+        if len(found)!=1:raise ValueError('未找到唯一偏好，未写入文件')
+        if not args.text:raise ValueError('更新偏好需要 --text')
+        found[0]['preference']=args.text
+        if args.scope:found[0]['scope']=args.scope
+        found[0]['updated']=dt.date.today().isoformat()
+        save_store(path,data);emit({'path':str(path),'updated':found[0]})
     else:
         old=data['preferences'];data['preferences']=[p for p in old if p.get('id')!=args.id]
         if len(data['preferences'])==len(old):raise ValueError('未找到该偏好，未写入文件')
@@ -199,7 +207,7 @@ def parser():
         if name=='read-xlsx':x.add_argument('--sheet');x.add_argument('--start-row',type=int,default=1);x.add_argument('--start-col',type=int,default=1);x.add_argument('--max-rows',type=int,default=100);x.add_argument('--max-cols',type=int,default=40)
     for name,func in [('create-docx',create_docx),('create-xlsx',create_xlsx),('create-image',create_image)]:
         x=sub.add_parser(name);x.add_argument('--spec',required=True);x.add_argument('--output',required=True);x.set_defaults(func=func)
-    x=sub.add_parser('preferences');x.add_argument('action',choices=['list','add','delete']);x.add_argument('--store');x.add_argument('--text');x.add_argument('--scope');x.add_argument('--id');x.add_argument('--confirmed',action='store_true');x.set_defaults(func=prefs)
+    x=sub.add_parser('preferences');x.add_argument('action',choices=['list','add','update','delete']);x.add_argument('--store');x.add_argument('--text');x.add_argument('--scope');x.add_argument('--id');x.add_argument('--confirmed',action='store_true');x.set_defaults(func=prefs)
     return p
 
 
