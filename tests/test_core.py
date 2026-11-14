@@ -310,6 +310,27 @@ class CoreTests(unittest.TestCase):
         self.assertFalse((target/'local-note.txt').exists());self.assertEqual((target/'SKILL.md').read_text(encoding='utf-8'),'虚构技能')
         denied2=subprocess.run(cmd+['--backup-to',str(backup)],capture_output=True,text=True,encoding='utf-8',env=env)
         self.assertNotEqual(denied2.returncode,0);self.assertEqual((backup/'local-note.txt').read_text(encoding='utf-8'),'保留')
+    def test_installer_preserves_same_machine_preferences_on_update(self):
+        import shutil
+        profile=self.d/'profile';skills=profile/'skills';skills.mkdir(parents=True)
+        pref=profile/'.property-work-assistant'/'preferences.json';pref.parent.mkdir()
+        pref_bytes=b'{"schema":1,"preferences":[{"id":"test-only","scope":"demo","preference":"plain table","status":"confirmed-by-user"}]}\n'
+        pref.write_bytes(pref_bytes)
+        target=skills/'property-work-assistant';backup_root=profile/'skill-backups';backup_root.mkdir()
+        env=os.environ.copy();env['PYTHONIOENCODING']='utf-8'
+        def package(name,text):
+            root=self.d/name/'property-work-assistant';(root/'scripts').mkdir(parents=True)
+            (root/'SKILL.md').write_text(text,encoding='utf-8')
+            shutil.copy2(SCRIPTS/'install_skill.py',root/'scripts'/'install_skill.py')
+            return root/'scripts'/'install_skill.py'
+        v1=package('v1','测试技能 v1')
+        first=subprocess.run([sys.executable,str(v1),'--target',str(target)],capture_output=True,text=True,encoding='utf-8',env=env)
+        self.assertEqual(first.returncode,0,(first.stdout,first.stderr));self.assertEqual(pref.read_bytes(),pref_bytes)
+        v2=package('v2','测试技能 v2');backup=backup_root/'before-update'
+        update=subprocess.run([sys.executable,str(v2),'--target',str(target),'--backup-to',str(backup)],capture_output=True,text=True,encoding='utf-8',env=env)
+        self.assertEqual(update.returncode,0,(update.stdout,update.stderr));self.assertEqual(pref.read_bytes(),pref_bytes)
+        self.assertEqual((backup/'SKILL.md').read_text(encoding='utf-8'),'测试技能 v1')
+        self.assertEqual((target/'SKILL.md').read_text(encoding='utf-8'),'测试技能 v2')
     def test_installer_restores_old_skill_if_promotion_fails(self):
         import importlib.util,shutil
         from unittest.mock import patch
