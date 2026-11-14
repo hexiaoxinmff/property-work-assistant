@@ -1,10 +1,16 @@
 #!/usr/bin/env python3
 """Search public skills.sh directory with a generic, non-sensitive task keyword."""
-import argparse,json,re,sys,urllib.error,urllib.parse,urllib.request
+import argparse,http.client,json,re,sys,urllib.error,urllib.parse,urllib.request
 
 def clean(value,max_len=180):
     value=str(value or '')
     return ''.join(c for c in value if c.isprintable())[:max_len]
+
+def directory_url(slug):
+    parts=slug.split('/')
+    if len(parts)<2 or len(parts)>8 or any(part in ('.','..') or not re.fullmatch(r'[A-Za-z0-9._-]{1,100}',part) for part in parts):
+        return None
+    return 'https://skills.sh/'+urllib.parse.quote(slug,safe='/')
 
 def main():
     p=argparse.ArgumentParser(description=__doc__)
@@ -28,11 +34,10 @@ def main():
         for item in data['skills'][:args.limit]:
             if not isinstance(item,dict):continue
             slug=clean(item.get('id'));source=clean(item.get('source'));name=clean(item.get('name'))
-            parts=slug.split('/')
-            url='https://skills.sh/'+urllib.parse.quote(slug,safe='/') if len(parts)>=2 and all(re.fullmatch(r'[A-Za-z0-9._-]+',x) for x in parts) else None
+            url=directory_url(slug)
             results.append({'name':name,'source':source,'directory_url':url,'installs':item.get('installs') if isinstance(item.get('installs'),int) else None})
         result={'status':'ok' if results else 'no_results','query':query,'results':results,'note':'搜索结果为第三方元数据；需核对来源、内容、权限与实际适用性。'}
-    except (urllib.error.URLError,TimeoutError,OSError,ValueError,json.JSONDecodeError) as exc:
+    except (urllib.error.URLError,http.client.HTTPException,TimeoutError,OSError,UnicodeError,ValueError,json.JSONDecodeError) as exc:
         result={'status':'unavailable','reason':clean(type(exc).__name__+': '+str(exc)), 'results':[], 'note':'搜索不可用，继续使用现有技能或平台能力。'}
     print(json.dumps(result,ensure_ascii=False,indent=2));return 0 if result['status']!='unavailable' else 3
 if __name__=='__main__':
