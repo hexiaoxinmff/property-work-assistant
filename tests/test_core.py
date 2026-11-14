@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Offline synthetic regression tests; no customer files, network, or external writes."""
-import contextlib,hashlib,http.client,io,json,os,re,subprocess,sys,tempfile,unittest
+import contextlib,hashlib,http.client,io,json,os,re,subprocess,sys,tempfile,unittest,zipfile
 from pathlib import Path
 from unittest.mock import patch
 sys.path.insert(0,str(Path(__file__).resolve().parent.parent/'scripts'))
@@ -255,6 +255,42 @@ class CoreTests(unittest.TestCase):
         blocked=self.d/'blocked.docx'
         self.run_tool('fill_docx.py',src,'--out',blocked,'--replace','【分段】=>新值',success=False)
         self.assertFalse(blocked.exists());self.assertEqual(hashlib.sha256(src.read_bytes()).hexdigest(),before)
+    @unittest.skipUnless(WORD,'python-docx unavailable')
+    def test_word_complex_template_preserves_nontext_parts(self):
+        import struct,zlib
+        from docx.shared import Inches
+        from docx.enum.section import WD_SECTION
+        def png_chunk(kind,data):
+            return struct.pack('>I',len(data))+kind+data+struct.pack('>I',zlib.crc32(kind+data)&0xffffffff)
+        png=b'\x89PNG\r\n\x1a\n'+png_chunk(b'IHDR',struct.pack('>IIBBBBB',1,1,8,6,0,0,0))+png_chunk(b'IDAT',zlib.compress(b'\x00\xff\x00\x00\xff'))+png_chunk(b'IEND',b'')
+        d=Document();first=d.sections[0]
+        first.header.paragraphs[0].text='虚构第一页页眉';first.footer.paragraphs[0].text='虚构第一页页脚'
+        first.different_first_page_header_footer=True
+        first.first_page_header.paragraphs[0].text='虚构首页页眉';first.first_page_footer.paragraphs[0].text='虚构首页页脚'
+        d.add_paragraph('虚构复杂通知',style='Title');d.add_paragraph('致：【商户名称】')
+        table=d.add_table(rows=2,cols=3);table.cell(0,0).merge(table.cell(0,2));table.cell(0,0).text='合并表头'
+        table.cell(1,0).text='事项';nested=table.cell(1,1).add_table(rows=1,cols=1);nested.cell(0,0).paragraphs[0].add_run('金额：【金额】')
+        table.cell(1,2).paragraphs[0].add_run().add_picture(io.BytesIO(png),width=Inches(0.25))
+        second=d.add_section(WD_SECTION.NEW_PAGE);second.header.is_linked_to_previous=False;second.footer.is_linked_to_previous=False
+        second.header.paragraphs[0].text='虚构第二页页眉';second.footer.paragraphs[0].text='虚构第二页页脚'
+        d.add_paragraph('第二页正文与分页设置保留')
+        src=self.d/'complex.docx';d.save(src);before=hashlib.sha256(src.read_bytes()).hexdigest()
+        out=self.d/'complex-filled.docx';plan=self.d/'complex-plan.json'
+        changes=[{'old':'【商户名称】','new':'虚构商户甲'},{'old':'【金额】','new':'900.00'}]
+        plan.write_text(json.dumps(changes,ensure_ascii=False),encoding='utf-8')
+        self.run_tool('fill_docx.py',src,'--out',out,'--expect-sha256',before,'--replace','【商户名称】=>虚构商户甲','--replace','【金额】=>900.00')
+        result=json.loads(self.run_tool('verify_docx_expected.py',src,out,'--plan',plan).stdout)
+        self.assertTrue(result['passed']);self.assertTrue(result['same_package_members']);self.assertTrue(result['other_parts_identical']);self.assertTrue(result['body_structure_and_attributes_identical'])
+        with zipfile.ZipFile(src) as a,zipfile.ZipFile(out) as b:
+            self.assertEqual(set(a.namelist()),set(b.namelist()))
+            media=[n for n in a.namelist() if n.startswith('word/media/')]
+            self.assertEqual(len(media),1)
+            for name in media:self.assertEqual(a.read(name),b.read(name))
+        filled=Document(out);self.assertEqual(filled.sections[0].header.paragraphs[0].text,'虚构第一页页眉');self.assertEqual(filled.sections[0].footer.paragraphs[0].text,'虚构第一页页脚')
+        self.assertEqual(filled.sections[0].first_page_header.paragraphs[0].text,'虚构首页页眉');self.assertEqual(filled.sections[0].first_page_footer.paragraphs[0].text,'虚构首页页脚')
+        self.assertEqual(filled.sections[1].header.paragraphs[0].text,'虚构第二页页眉');self.assertEqual(filled.sections[1].footer.paragraphs[0].text,'虚构第二页页脚')
+        table=filled.tables[0];self.assertEqual(table.cell(0,0)._tc,table.cell(0,2)._tc);self.assertEqual(table.cell(1,1).tables[0].cell(0,0).text,'金额：900.00')
+        self.assertEqual(len(filled.sections),2);self.assertEqual(len(filled.tables),1)
     def test_install_and_backup_without_overwrite(self):
         import shutil
         source=self.d/'package';(source/'scripts').mkdir(parents=True)
