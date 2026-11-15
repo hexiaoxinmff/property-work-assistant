@@ -27,6 +27,10 @@ class CoreTests(unittest.TestCase):
         guide=(ROOT/'references'/'cleaning-followup.md').read_text(encoding='utf-8')
         self.assertNotIn(r'\n', guide)
         self.assertIn('打印效果需在使用软件中预览。\n\n工具会检查工作簿批注', guide)
+    def test_all_markdown_has_no_literal_backslash_n(self):
+        for path in ROOT.rglob('*.md'):
+            with self.subTest(path=path.relative_to(ROOT)):
+                self.assertNotIn(r'\n', path.read_text(encoding='utf-8'))
     def setUp(self):self.temp=tempfile.TemporaryDirectory(prefix='property-test-');self.d=Path(self.temp.name)
     def tearDown(self):self.temp.cleanup()
     def run_tool(self,script,*args,success=True):
