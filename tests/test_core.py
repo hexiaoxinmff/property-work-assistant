@@ -23,6 +23,10 @@ class CoreTests(unittest.TestCase):
         self.assertIsNone(re.search(r'(?im)\b[A-Z]:\\Users\\[^\\]+\\',documentation))
         self.assertIn(r'".\scripts\ocr_images_winrt.ps1"',documentation)
         self.assertIn(r'".\scripts\ocr_pdf_winrt.ps1"',documentation)
+    def test_cleaning_guide_has_real_paragraph_breaks(self):
+        guide=(ROOT/'references'/'cleaning-followup.md').read_text(encoding='utf-8')
+        self.assertNotIn(r'\n', guide)
+        self.assertIn('打印效果需在使用软件中预览。\n\n工具会检查工作簿批注', guide)
     def setUp(self):self.temp=tempfile.TemporaryDirectory(prefix='property-test-');self.d=Path(self.temp.name)
     def tearDown(self):self.temp.cleanup()
     def run_tool(self,script,*args,success=True):
