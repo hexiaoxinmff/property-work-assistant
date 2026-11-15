@@ -40,6 +40,11 @@ class CoreTests(unittest.TestCase):
         self.assertIn('无需为每项填写完整字段',guide)
         self.assertIn('可只写“先看附件，告诉我能做什么”',guide)
         self.assertIn('references/quick-task-intake.md',skill)
+    def test_user_keeps_control_of_desktop_ui_when_requested(self):
+        skill=(ROOT/'SKILL.md').read_text(encoding='utf-8')
+        self.assertIn('不调用 GUI 自动化工具',skill)
+        self.assertIn('提供明确路径、步骤和验收点交由使用者执行',skill)
+        self.assertIn('不得把未执行的视觉、平台或业务检查报告为已通过',skill)
     def setUp(self):self.temp=tempfile.TemporaryDirectory(prefix='property-test-');self.d=Path(self.temp.name)
     def tearDown(self):self.temp.cleanup()
     def run_tool(self,script,*args,success=True):
@@ -399,3 +404,4 @@ if __name__=='__main__':
         print('测试不完整：有测试因依赖或条件缺失被跳过，不能判定全部通过。',file=sys.stderr)
         sys.exit(2)
     sys.exit(0 if runner.result.wasSuccessful() else 1)
+
