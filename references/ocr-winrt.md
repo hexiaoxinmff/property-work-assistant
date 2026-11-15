@@ -7,13 +7,13 @@
 示例（从技能目录运行；输出目录必须是尚不存在的新目录）：
 
 ```powershell
-powershell.exe -NoProfile -File ".\scripts\ocr_images_winrt.ps1" -InputPath "D:\samples\notice.png" -OutputDirectory "D:\outputs\notice_ocr"
+powershell.exe -NoProfile -File ".\scripts\ocr_images_winrt.ps1" -InputPath "D:\samples\scan.png" -OutputDirectory "D:\outputs\scan_ocr"
 ```
 
 PDF 示例（仅适用于扫描 PDF，且需新输出目录）：
 
 ```powershell
-powershell.exe -NoProfile -File ".\scripts\ocr_pdf_winrt.ps1" -InputPath "D:\samples\notice.pdf" -OutputDirectory "D:\outputs\notice_pdf_ocr" -ResolutionDpi 200
+powershell.exe -NoProfile -File ".\scripts\ocr_pdf_winrt.ps1" -InputPath "D:\samples\scan.pdf" -OutputDirectory "D:\outputs\scan_pdf_ocr" -ResolutionDpi 200
 ```
 
 PDF 脚本逐页用 Windows WinRT PDF 渲染器生成内存位图，再调用系统 OCR；默认 200 DPI，每页限制 40,000,000 像素，可用 `-ResolutionDpi`（96–400）与 `-MaxPixelsPerPage` 调节。每个 PDF 生成同名 UTF-8 TXT，并在输出目录生成 `ocr_manifest.json`，记录源 PDF SHA-256、页数、分辨率、页尺寸、行数及待人工核对状态。必须使用全新输出目录；重复文件名会被拒绝；源 PDF 只读。加密、损坏、超限、系统组件不可用或运行失败时停止并如实报告。
