@@ -16,7 +16,7 @@
 
 ## 第三方源码
 
-本轻量试用包不包含第三方源码。八个上游项目的固定提交、下载地址、哈希和许可证见 references/upstream-manifest.json；完整 v0.8.27 技能包内置离线源码归档；轻量包不包含这些大文件。确有需要且网络可用时，可运行 python scripts/restore_upstreams.py --name 项目名 下载、校验并解压单个项目；技能目录不可写时可追加 --dest 指定允许写入的目录。上游项目未全部执行或业务验收。
+本轻量试用包不包含第三方源码。八个上游项目的固定提交、下载地址、哈希和许可证见 references/upstream-manifest.json；完整技能包内置离线源码归档；轻量包不包含这些大文件。确有需要且网络可用时，可运行 python scripts/restore_upstreams.py --name 项目名 下载、校验并解压单个项目；技能目录不可写时可追加 --dest 指定允许写入的目录。上游项目未全部执行或业务验收。
 
 ## 当前验证范围
 
