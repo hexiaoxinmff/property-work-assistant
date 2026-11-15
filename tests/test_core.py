@@ -31,6 +31,15 @@ class CoreTests(unittest.TestCase):
         for path in ROOT.rglob('*.md'):
             with self.subTest(path=path.relative_to(ROOT)):
                 self.assertNotIn(r'\n', path.read_text(encoding='utf-8'))
+    def test_quick_task_intake_is_optional_and_covers_role_tasks(self):
+        guide=(ROOT/'references'/'quick-task-intake.md').read_text(encoding='utf-8')
+        skill=(ROOT/'SKILL.md').read_text(encoding='utf-8')
+        for task in ['欠费与催缴','保洁整改','合同/租赁','用电汇总','团队交接','车辆记录','Word/Excel','工作汇报']:
+            with self.subTest(task=task): self.assertIn(task,guide)
+        self.assertIn('可选项，不能变成必填步骤',skill)
+        self.assertIn('无需为每项填写完整字段',guide)
+        self.assertIn('可只写“先看附件，告诉我能做什么”',guide)
+        self.assertIn('references/quick-task-intake.md',skill)
     def setUp(self):self.temp=tempfile.TemporaryDirectory(prefix='property-test-');self.d=Path(self.temp.name)
     def tearDown(self):self.temp.cleanup()
     def run_tool(self,script,*args,success=True):
