@@ -383,6 +383,17 @@ class CoreTests(unittest.TestCase):
         r=self.run_tool('office_helper.py','preferences','list','--store',store);self.assertEqual(json.loads(r.stdout)['preferences'][0]['preference'],'礼貌简短')
         self.run_tool('office_helper.py','preferences','delete','--store',store,'--id',pid,'--confirmed')
         r=self.run_tool('office_helper.py','preferences','list','--store',store);self.assertEqual(json.loads(r.stdout)['preferences'],[])
+    def test_preference_targeted_update_and_delete_preserve_others(self):
+        store=self.d/'preferences-multiple.json'
+        a=json.loads(self.run_tool('office_helper.py','preferences','add','--store',store,'--scope','场景甲','--text','偏好甲','--confirmed').stdout)['saved']
+        b=json.loads(self.run_tool('office_helper.py','preferences','add','--store',store,'--scope','场景乙','--text','偏好乙','--confirmed').stdout)['saved']
+        self.run_tool('office_helper.py','preferences','update','--store',store,'--id',a['id'],'--text','偏好甲更新','--confirmed')
+        entries={x['id']:x for x in json.loads(self.run_tool('office_helper.py','preferences','list','--store',store).stdout)['preferences']}
+        self.assertEqual(entries[a['id']]['preference'],'偏好甲更新')
+        self.assertEqual((entries[b['id']]['scope'],entries[b['id']]['preference']),('场景乙','偏好乙'))
+        self.run_tool('office_helper.py','preferences','delete','--store',store,'--id',a['id'],'--confirmed')
+        remaining=json.loads(self.run_tool('office_helper.py','preferences','list','--store',store).stdout)['preferences']
+        self.assertEqual([(x['id'],x['preference']) for x in remaining],[(b['id'],'偏好乙')])
     def test_discovery_private_path_rejected(self):
         self.run_tool('discover_skills.py',r'C:\private\client',success=False)
     def test_discovery_candidate_url_rejects_dot_segments(self):
@@ -409,4 +420,3 @@ if __name__=='__main__':
         print('测试不完整：有测试因依赖或条件缺失被跳过，不能判定全部通过。',file=sys.stderr)
         sys.exit(2)
     sys.exit(0 if runner.result.wasSuccessful() else 1)
-
